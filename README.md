@@ -7,12 +7,12 @@ go-masscan is a golang library to run masscan scans, parse scan results.
 
 
 ```sh
-go get github.com/dean2021/go-masscan
+go get github.com/lc/go-masscan
 ```
 to install the package
 
 ```go
-import "github.com/dean2021/go-masscan"
+import "github.com/lc/go-masscan"
 ```
 
 ## Example
@@ -21,7 +21,7 @@ import "github.com/dean2021/go-masscan"
 package main
 
 import (
-	"github.com/dean2021/go-masscan"
+	"github.com/lc/go-masscan"
 	"fmt"
 )
 
@@ -29,37 +29,38 @@ func main() {
 
 	m := masscan.New()
 
-	// masscan可执行文件路径,默认不需要设置
+	// masscan system path
 	//m.SetSystemPath("/usr/local/masscan/bin/masscan")
 
-	// 扫描端口范围
+	// port(s) to scan
 	m.SetPorts("0-65535")
 
-	// 扫描IP范围
+	// IP Range to scan
 	m.SetRanges("0.0.0.0/8")
 
-	// 扫描速率
+	// masscan rate
 	m.SetRate("2000")
 
-	// 隔离扫描名单
+	// IP to exclude from scan.
 	m.SetExclude("127.0.0.1")
 
-	// 开始扫描
+	// Start Scan
 	err := m.Run()
 	if err != nil {
-		fmt.Println("scanner failed:", err)
+		log.Fatalf("Error running scan: %v", err)
 		return
 	}
 
-	// 解析扫描结果
+	// Parse masscan results.
 	results, err := m.Parse()
 	if err != nil {
-		fmt.Println("Parse scanner result:", err)
+		log.Fatalf("Error parsing scan: %v",err)
 		return
 	}
 
 	for _, result := range results {
 		fmt.Println(result)
+
 	}
 
 }

@@ -3,9 +3,9 @@ package masscan
 import (
 	"bytes"
 	"encoding/xml"
-	"fmt"
 	"io"
 	"os/exec"
+
 	"github.com/pkg/errors"
 )
 
@@ -66,7 +66,6 @@ func (m *Masscan) Run() error {
 	m.Args = append(m.Args, "-oX")
 	m.Args = append(m.Args, "-")
 	cmd = exec.Command(m.SystemPath, m.Args...)
-	fmt.Println(cmd.Args)
 	cmd.Stdout = &outb
 	cmd.Stderr = &errs
 	err := cmd.Run()
